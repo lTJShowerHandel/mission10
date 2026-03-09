@@ -1,0 +1,72 @@
+.App {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+header {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+  color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.subheading {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.95;
+  line-height: 1.5;
+}
+
+.table-container {
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.bowler-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.bowler-table th,
+.bowler-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.bowler-table th {
+  background: #f7fafc;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.875rem;
+}
+
+.bowler-table tr:hover {
+  background: #f8fafc;
+}
+
+.bowler-table td {
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+.error {
+  color: #c53030;
+  padding: 1rem;
+  background: #fff5f5;
+  border-radius: 6px;
+  margin: 1rem 0;
+}

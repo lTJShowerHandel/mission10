@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+frontend/build/
+backend/bin/
+backend/obj/
+*.dll
+*.pdb
+*.exe
+
+# IDE
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Misc
+.DS_Store
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database (keep DB out of repo - each dev has their own)
+*.db
+*.sqlite
+*.sqlite3
+
+# Testing
+/coverage
