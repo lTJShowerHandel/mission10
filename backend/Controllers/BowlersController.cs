@@ -22,23 +22,36 @@ public class BowlersController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<BowlerDto>>> GetBowlers()
     {
-        var bowlers = await _context.Bowlers
-            .Include(b => b.Team)
-            .Where(b => b.Team.TeamName == "Marlins" || b.Team.TeamName == "Sharks")
-            .OrderBy(b => b.BowlerLastName)
-            .ThenBy(b => b.BowlerFirstName)
-            .Select(b => new BowlerDto
-            {
-                BowlerName = string.Join(" ", new[] { b.BowlerFirstName, b.BowlerMiddleInit, b.BowlerLastName }.Where(s => !string.IsNullOrEmpty(s))),
-                TeamName = b.Team.TeamName,
-                Address = b.BowlerAddress ?? "",
-                City = b.BowlerCity ?? "",
-                State = b.BowlerState ?? "",
-                Zip = b.BowlerZip ?? "",
-                PhoneNumber = b.BowlerPhoneNumber ?? "",
-            })
-            .ToListAsync();
+        try
+        {
+            var list = await _context.Bowlers
+                .Include(b => b.Team)
+                .Where(b => b.Team.TeamName == "Marlins" || b.Team.TeamName == "Sharks")
+                .OrderBy(b => b.BowlerLastName)
+                .ThenBy(b => b.BowlerFirstName)
+                .ToListAsync();
 
-        return Ok(bowlers);
+            var bowlers = list.Select(b =>
+            {
+                var nameParts = new[] { b.BowlerFirstName, b.BowlerMiddleInit, b.BowlerLastName }
+                    .Where(s => !string.IsNullOrEmpty(s));
+                return new BowlerDto
+                {
+                    BowlerName = string.Join(" ", nameParts),
+                    TeamName = b.Team.TeamName,
+                    Address = b.BowlerAddress ?? "",
+                    City = b.BowlerCity ?? "",
+                    State = b.BowlerState ?? "",
+                    Zip = b.BowlerZip ?? "",
+                    PhoneNumber = b.BowlerPhoneNumber ?? "",
+                };
+            }).ToList();
+
+            return Ok(bowlers);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = ex.Message, detail = ex.InnerException?.Message });
+        }
     }
 }

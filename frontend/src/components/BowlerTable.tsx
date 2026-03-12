@@ -10,7 +10,7 @@ export interface Bowler {
   phoneNumber: string;
 }
 
-const API_URL = 'http://localhost:5000/api/bowlers';
+const API_URL = '/api/bowlers';
 
 const BowlerTable: React.FC = () => {
   const [bowlers, setBowlers] = useState<Bowler[]>([]);
@@ -21,11 +21,16 @@ const BowlerTable: React.FC = () => {
     const fetchBowlers = async () => {
       try {
         const response = await fetch(API_URL);
-        if (!response.ok) throw new Error('Failed to fetch bowlers');
-        const data = await response.json();
-        setBowlers(data);
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          const msg = (data as { error?: string })?.error ?? data?.detail ?? response.statusText;
+          throw new Error(msg);
+        }
+        setBowlers(Array.isArray(data) ? data : []);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
+        const message =
+          err instanceof Error ? err.message : 'An error occurred';
+        setError(message);
       } finally {
         setLoading(false);
       }
